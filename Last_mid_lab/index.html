@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Interactive Portfolio</title>
+
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        background-color: white;
+        color: black;
+        padding: 20px;
+      }
+
+      button {
+        padding: 10px 20px;
+        margin: 5px;
+      }
+
+      table {
+        margin: auto;
+        border-spacing: 10px;
+      }
+
+      #about,
+      #projects,
+      #contact {
+        margin-top: 20px;
+      }
+
+      #projects,
+      #contact {
+        display: none;
+      }
+
+      #error {
+        color: red;
+      }
+
+      #success {
+        color: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1 id="PageTitle">My Interactive Portfolio</h1>
+
+    <h2 id="greeting"></h2>
+
+    <button id="switchBtn" onclick="toggleMode()">Switch to Dark Mode</button>
+
+    <hr />
+
+    <button onclick="showAbout()">About</button>
+    <button onclick="showProjects()">Projects</button>
+    <button onclick="showContact()">Contact</button>
+
+    <hr />
+
+    <!-- About Section -->
+    <div id="about">
+      <h2>About Me</h2>
+
+      <p>Name : Abdullah Al Sunny</p>
+
+      <p>Department : Computer Science & Engineering</p>
+
+      <p>University : American International University-Bangladesh (AIUB)</p>
+    </div>
+
+    <!-- Projects Section -->
+    <div id="projects">
+      <h2>My Projects</h2>
+
+      <ul style="display: inline-block; text-align: left">
+        <li>Portfolio Website</li>
+        <li>Student Management System</li>
+        <li>Smart Agricultural Disease Detection</li>
+      </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact">
+      <h2>Contact Form</h2>
+
+      <form onsubmit="return validateForm();">
+        <table>
+          <tr>
+            <td>Name</td>
+            <td><input type="text" id="name" /></td>
+          </tr>
+
+          <tr>
+            <td>Email</td>
+            <td><input type="text" id="email" /></td>
+          </tr>
+
+          <tr>
+            <td>Message</td>
+            <td>
+              <textarea id="message" rows="5" cols="30"></textarea>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2">
+              <button type="submit" id="submitBtn">Send Message</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+
+      <h3 id="error"></h3>
+
+      <h3 id="success"></h3>
+    </div>
+
+    <script>
+      // Greeting
+
+      var hour = new Date().getHours();
+
+      if (hour < 12) {
+        document.getElementById("greeting").innerHTML = "Good Morning";
+      } else if (hour < 18) {
+        document.getElementById("greeting").innerHTML = "Good Afternoon";
+      } else {
+        document.getElementById("greeting").innerHTML = "Good Evening";
+      }
+
+      // Theme Switch
+
+      function toggleMode() {
+        var body = document.body;
+        var title = document.getElementById("PageTitle");
+        var button = document.getElementById("switchBtn");
+
+        if (body.style.backgroundColor == "black") {
+          body.style.backgroundColor = "white";
+          body.style.color = "black";
+
+          title.innerHTML = "My Interactive Portfolio";
+          button.innerHTML = "Switch to Dark Mode";
+        } else {
+          body.style.backgroundColor = "black";
+          body.style.color = "white";
+
+          title.innerHTML = "Dark Mode Enabled";
+          button.innerHTML = "Switch to Light Mode";
+        }
+      }
+
+      // About
+
+      function showAbout() {
+        document.getElementById("about").style.display = "block";
+        document.getElementById("projects").style.display = "none";
+        document.getElementById("contact").style.display = "none";
+      }
+
+      // Projects
+
+      function showProjects() {
+        document.getElementById("about").style.display = "none";
+        document.getElementById("projects").style.display = "block";
+        document.getElementById("contact").style.display = "none";
+      }
+
+      // Contact
+
+      function showContact() {
+        document.getElementById("about").style.display = "none";
+        document.getElementById("projects").style.display = "none";
+        document.getElementById("contact").style.display = "block";
+      }
+
+      // Contact Form Validation
+
+      function validateForm() {
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var message = document.getElementById("message").value;
+
+        var error = document.getElementById("error");
+        var success = document.getElementById("success");
+
+        error.innerHTML = "";
+        success.innerHTML = "";
+
+        console.log(name);
+        console.log(email);
+
+        // Validation 1
+        if (name == "") {
+          error.innerHTML = "Name cannot be empty.";
+          return false;
+        }
+
+        // Validation 2
+        if (email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+          error.innerHTML = "Invalid Email Address.";
+          return false;
+        }
+
+        // Validation 3
+        if (message.length < 10) {
+          error.innerHTML = "Message must be at least 10 characters.";
+          return false;
+        }
+
+        // Extra Validation 4
+        if (name.length < 3) {
+          error.innerHTML = "Name must contain at least 3 characters.";
+          return false;
+        }
+
+        // Extra Validation 5
+        if (email.indexOf(" ") != -1) {
+          error.innerHTML = "Email cannot contain spaces.";
+          return false;
+        }
+
+        // Extra Validation 6
+        if (message.length > 200) {
+          error.innerHTML = "Message cannot exceed 200 characters.";
+          return false;
+        }
+
+        alert("Message Sent Successfully!");
+
+        document.getElementById("submitBtn").innerHTML = "Submitted";
+
+        success.innerHTML =
+          "<h2>Registration Complete</h2>" +
+          "Name : " +
+          name +
+          "<br>Email : " +
+          email +
+          "<br>Message : " +
+          message;
+
+        return false;
+      }
+    </script>
+  </body>
+</html>
